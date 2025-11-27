@@ -89,7 +89,6 @@ PrivyFlow is a **Polygon-native payment + DeFi infrastructure layer** that combi
    ```bash
    pnpm install
    ```
-
 3. **Environment Setup:**
    
    Create `.env` files in each workspace:
