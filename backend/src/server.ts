@@ -1,4 +1,4 @@
-import express, { Express } from 'express';
+import express, { Application } from 'express';
 import cors from 'cors';
 import { config } from './config/env';
 import paymentRoutes from './routes/payments';
@@ -6,7 +6,7 @@ import vaultRoutes from './routes/vaults';
 import analyticsRoutes from './routes/analytics';
 import identityRoutes from './routes/identity';
 
-const app: Express = express();
+const app: Application = express();
 const port = config.PORT;
 
 // CORS configuration for production
