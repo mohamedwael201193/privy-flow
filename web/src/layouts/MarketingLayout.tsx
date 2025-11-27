@@ -23,8 +23,8 @@ export default function MarketingLayout({ children }: MarketingLayoutProps) {
             <a href="#how-it-works" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
               How It Works
             </a>
-            <a href="/app" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-              Docs
+            <a href="https://github.com/mohamedwael201193/privyFlow" target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+              GitHub
             </a>
           </div>
 

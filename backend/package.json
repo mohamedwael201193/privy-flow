@@ -4,8 +4,10 @@
     "private": true,
     "scripts": {
         "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
-        "build": "tsc",
-        "start": "node dist/server.js"
+        "build": "tsc && npx prisma generate",
+        "start": "node dist/server.js",
+        "postinstall": "npx prisma generate",
+        "migrate:deploy": "npx prisma migrate deploy"
     },
     "dependencies": {
         "@prisma/client": "5.10.0",

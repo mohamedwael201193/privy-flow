@@ -9,7 +9,15 @@ import identityRoutes from './routes/identity';
 const app = express();
 const port = config.PORT;
 
-app.use(cors());
+// CORS configuration for production
+const corsOptions = {
+    origin: process.env.NODE_ENV === 'production'
+        ? ['https://privy-flow.vercel.app', 'https://privy-flow.vercel.app']
+        : '*',
+    credentials: true
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 
 app.get('/health', (req, res) => {

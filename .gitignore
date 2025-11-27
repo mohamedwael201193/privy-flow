@@ -33,9 +33,10 @@ Thumbs.db
 .vscode
 .idea
 
-# Documentation (User Request: Ignore all MD except README)
+# Documentation (User Request: Ignore all MD except README and DEPLOYMENT)
 *.md
 !README.md
+!DEPLOYMENT.md
 
 # Hardhat
 contracts/artifacts
@@ -49,3 +50,4 @@ contracts/typechain-types
 # Database
 *.sqlite
 *.sqlite-journal
+DEPLOYMENT.md
