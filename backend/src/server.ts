@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { Express } from 'express';
 import cors from 'cors';
 import { config } from './config/env';
 import paymentRoutes from './routes/payments';
@@ -6,7 +6,7 @@ import vaultRoutes from './routes/vaults';
 import analyticsRoutes from './routes/analytics';
 import identityRoutes from './routes/identity';
 
-const app = express();
+const app: Express = express();
 const port = config.PORT;
 
 // CORS configuration for production
@@ -29,6 +29,12 @@ app.use('/api/vaults', vaultRoutes);
 app.use('/api/analytics', analyticsRoutes);
 app.use('/api/identity', identityRoutes);
 
-app.listen(port, () => {
-    console.log(`Server running on port ${port}`);
-});
+// Export for Vercel serverless
+export default app;
+
+// Local development server
+if (process.env.NODE_ENV !== 'production') {
+    app.listen(port, () => {
+        console.log(`Server running on port ${port}`);
+    });
+}
