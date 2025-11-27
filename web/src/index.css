@@ -1,0 +1,110 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* PrivyFlow Dark DeFi Theme */
+    --background: 240 10% 8%;
+    --foreground: 240 10% 95%;
+
+    --card: 240 10% 12%;
+    --card-foreground: 240 10% 95%;
+    --card-glass: 240 10% 15%;
+
+    --popover: 240 10% 12%;
+    --popover-foreground: 240 10% 95%;
+
+    /* Polygon Purple + Steel Blue accents */
+    --primary: 270 70% 60%;
+    --primary-foreground: 240 10% 95%;
+    --primary-glow: 270 70% 70%;
+
+    --secondary: 200 80% 50%;
+    --secondary-foreground: 240 10% 95%;
+    --secondary-glow: 200 80% 60%;
+
+    --muted: 240 10% 20%;
+    --muted-foreground: 240 5% 60%;
+
+    --accent: 270 70% 55%;
+    --accent-foreground: 240 10% 95%;
+
+    --destructive: 0 70% 55%;
+    --destructive-foreground: 240 10% 95%;
+
+    --border: 240 10% 20%;
+    --input: 240 10% 15%;
+    --ring: 270 70% 60%;
+
+    --radius: 0.75rem;
+    
+    /* Custom gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(270 70% 60%), hsl(200 80% 50%));
+    --gradient-card: linear-gradient(180deg, hsl(240 10% 12%), hsl(240 10% 10%));
+    --gradient-hero: radial-gradient(ellipse at top, hsl(270 70% 20% / 0.3), transparent 50%);
+    
+    /* Shadows and glows */
+    --shadow-glow: 0 0 30px hsl(270 70% 60% / 0.3);
+    --shadow-card: 0 10px 30px hsl(240 10% 5% / 0.5);
+    
+    /* Transitions */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    --sidebar-background: 0 0% 98%;
+
+    --sidebar-foreground: 240 5.3% 26.1%;
+
+    --sidebar-primary: 240 5.9% 10%;
+
+    --sidebar-primary-foreground: 0 0% 98%;
+
+    --sidebar-accent: 240 4.8% 95.9%;
+
+    --sidebar-accent-foreground: 240 5.9% 10%;
+
+    --sidebar-border: 220 13% 91%;
+
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    /* Dark mode inherits same values */
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    background-image: var(--gradient-hero);
+  }
+}
+
+@layer utilities {
+  .glass-card {
+    @apply bg-card-glass/30 backdrop-blur-xl border border-border/50;
+  }
+  
+  .glow-primary {
+    box-shadow: 0 0 20px hsl(var(--primary) / 0.4);
+  }
+  
+  .glow-secondary {
+    box-shadow: 0 0 20px hsl(var(--secondary) / 0.4);
+  }
+  
+  .gradient-text {
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+}
