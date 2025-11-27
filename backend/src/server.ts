@@ -9,12 +9,12 @@ import identityRoutes from './routes/identity';
 const app: Application = express();
 const port = config.PORT;
 
-// CORS configuration for production
+// CORS configuration - allow Vercel frontend
 const corsOptions = {
-    origin: process.env.NODE_ENV === 'production'
-        ? ['https://privy-flow.vercel.app', 'https://privy-flow.vercel.app']
-        : '*',
-    credentials: true
+    origin: ['https://privy-flow.vercel.app', 'http://localhost:5173'],
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
 };
 
 app.use(cors(corsOptions));
