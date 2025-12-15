@@ -14,12 +14,16 @@ import {
   Menu,
   X,
   Wallet,
+  Bot,
+  Globe,
 } from 'lucide-react';
 
 const navigation = [
   { name: 'Dashboard', href: '/app/dashboard', icon: LayoutDashboard },
   { name: 'Send', href: '/app/send', icon: Send },
+  { name: 'Corridors', href: '/app/corridors', icon: Globe, badge: 'NEW' },
   { name: 'Vaults', href: '/app/vaults', icon: Vault },
+  { name: 'AI Agents', href: '/app/agents', icon: Bot, badge: 'x402' },
   { name: 'Identity', href: '/app/identity', icon: ShieldCheck },
   { name: 'Analytics', href: '/app/analytics', icon: BarChart3 },
   { name: 'Developers', href: '/app/developers', icon: Code },
@@ -95,6 +99,11 @@ export default function DashboardLayout() {
                 >
                   <item.icon className="w-5 h-5" />
                   {item.name}
+                  {(item as any).badge && (
+                    <span className="ml-auto text-[10px] px-1.5 py-0.5 rounded-full bg-primary/20 text-primary font-semibold">
+                      {(item as any).badge}
+                    </span>
+                  )}
                 </Link>
               );
             })}

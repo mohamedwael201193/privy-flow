@@ -100,3 +100,15 @@ export const FAQS: FAQ[] = [
     answer: 'Corridor Vaults are liquidity pools that back specific payment routes (e.g., US→LatAm). By depositing stablecoins, you earn real fees from actual payment flows, not artificial emissions. This is "productive TVL" inspired by Katana.',
   },
 ];
+
+// Contract Addresses (Polygon Mainnet)
+export const CONTRACT_ADDRESSES = {
+  // Existing contracts
+  ROUTER: '0x2e9aF66F9B8f21a6E8510fbb5BF33F106414D00d' as `0x${string}`,
+  IDENTITY_GATE: '0xde2cf7cec93c033a2fc184080b55c8CCC5406Fa1' as `0x${string}`,
+  USDC: '0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359' as `0x${string}`,
+
+  // Wave 4 contracts
+  PAYMENT_AGENT: '0xBD2267Bd7d92A4100B4cB457ACDD5D3E9178c1E4' as `0x${string}`,
+  TIERED_LIMITS: '0x3c42696908B7A805365478f780899Cbd70D7804D' as `0x${string}`,
+};

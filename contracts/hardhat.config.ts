@@ -13,9 +13,10 @@ const config: HardhatUserConfig = {
     },
     networks: {
         polygon: {
-            url: process.env.POLYGON_RPC_URL || "https://polygon-rpc.com",
+            url: process.env.POLYGON_RPC_URL || "https://polygon-mainnet.g.alchemy.com/v2/demo",
             chainId: 137,
             accounts: process.env.DEPLOYER_PRIVATE_KEY ? [process.env.DEPLOYER_PRIVATE_KEY] : [],
+            timeout: 120000, // 2 min timeout
         },
         amoy: {
             url: "https://rpc-amoy.polygon.technology",
@@ -29,7 +30,10 @@ const config: HardhatUserConfig = {
         },
     },
     etherscan: {
-        apiKey: process.env.ETHERSCAN_API_KEY,
+        apiKey: {
+            polygon: process.env.ETHERSCAN_API_KEY || '',
+            polygonMumbai: process.env.ETHERSCAN_API_KEY || '',
+        },
     },
     paths: {
         sources: "./src",

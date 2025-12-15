@@ -37,6 +37,7 @@ Thumbs.db
 *.md
 !README.md
 !DEPLOYMENT.md
+!judging.md
 
 # Hardhat
 contracts/artifacts
@@ -51,3 +52,4 @@ contracts/typechain-types
 *.sqlite
 *.sqlite-journal
 DEPLOYMENT.md
+judging.md

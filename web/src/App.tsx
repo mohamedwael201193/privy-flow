@@ -13,6 +13,8 @@ import Analytics from "./pages/app/Analytics";
 import Developers from "./pages/app/Developers";
 import Settings from "./pages/app/Settings";
 import Help from "./pages/app/Help";
+import Agents from "./pages/app/Agents";
+import Corridors from "./pages/app/Corridors";
 import NotFound from "./pages/NotFound";
 
 import { WagmiProvider } from 'wagmi';
@@ -33,7 +35,9 @@ const App = () => (
               <Route index element={<Navigate to="/app/dashboard" replace />} />
               <Route path="dashboard" element={<Dashboard />} />
               <Route path="send" element={<Send />} />
+              <Route path="corridors" element={<Corridors />} />
               <Route path="vaults" element={<Vaults />} />
+              <Route path="agents" element={<Agents />} />
               <Route path="identity" element={<Identity />} />
               <Route path="analytics" element={<Analytics />} />
               <Route path="developers" element={<Developers />} />
