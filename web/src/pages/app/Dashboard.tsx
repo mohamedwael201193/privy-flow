@@ -1,7 +1,6 @@
 import { motion } from 'framer-motion';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { MOCK_ACTIVITIES } from '@/lib/constants';
 import {
   TrendingUp,
   TrendingDown,
@@ -12,7 +11,9 @@ import {
   Percent,
   ArrowDownLeft,
   Wallet,
-  ShieldCheck
+  ShieldCheck,
+  Activity,
+  Loader2
 } from 'lucide-react';
 import { useAnalyticsSummary } from '@/hooks/useAnalyticsSummary';
 
@@ -23,7 +24,12 @@ export default function Dashboard() {
   const { data: stats, isLoading } = useAnalyticsSummary(address);
 
   if (isLoading) {
-    return <div className="p-8">Loading dashboard...</div>;
+    return (
+      <div className="flex items-center justify-center p-16">
+        <Loader2 className="w-8 h-8 text-primary animate-spin" />
+        <span className="ml-3 text-muted-foreground">Loading dashboard...</span>
+      </div>
+    );
   }
 
   return (
@@ -46,7 +52,7 @@ export default function Dashboard() {
           <div className="space-y-1">
             <p className="text-sm text-muted-foreground">Total Sent</p>
             <h3 className="text-2xl font-bold">${stats?.totalSent?.toLocaleString() || "0.00"}</h3>
-            <p className="text-xs text-green-500">+12.5% vs last month</p>
+            {stats?.totalSent > 0 && <p className="text-xs text-green-500">Active sender</p>}
           </div>
         </Card>
 
@@ -73,7 +79,7 @@ export default function Dashboard() {
           <div className="space-y-1">
             <p className="text-sm text-muted-foreground">Active Vault Deposits</p>
             <h3 className="text-2xl font-bold">${stats?.activeVaultDeposits?.toLocaleString() || "0"}</h3>
-            <p className="text-xs text-muted-foreground">Earning 4.3% APY</p>
+            {stats?.activeVaultDeposits > 0 && <p className="text-xs text-green-500">Earning yield</p>}
           </div>
         </Card>
 
@@ -143,27 +149,30 @@ export default function Dashboard() {
         </div>
       </Card>
 
-      {/* Payment Routes Insight */}
+      {/* Quick Actions */}
       <Card className="p-6 glass-card">
-        <h2 className="text-xl font-display font-bold mb-4">Payment Routes Insight</h2>
+        <h2 className="text-xl font-display font-bold mb-4">Quick Actions</h2>
         <p className="text-sm text-muted-foreground mb-6">
-          AI-chosen vs manual routes saved gas over last 7 days
+          Get started with PrivyFlow's core features
         </p>
-        <div className="h-64 flex items-end justify-around gap-4">
-          {[65, 82, 78, 88, 75, 92, 85].map((value, index) => (
-            <div key={index} className="flex-1 flex flex-col items-center gap-2">
-              <div className="w-full bg-muted rounded-t-lg relative overflow-hidden" style={{ height: `${value}%` }}>
-                <div className="absolute inset-0 bg-gradient-to-t from-primary to-secondary opacity-80" />
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {[
+            { label: 'Send Payment', icon: ArrowUpRight, href: '/app/send', color: 'from-primary to-secondary' },
+            { label: 'Explore Vaults', icon: Vault, href: '/app/vaults', color: 'from-purple-500 to-pink-500' },
+            { label: 'Verify Identity', icon: ShieldCheck, href: '/app/identity', color: 'from-blue-500 to-cyan-500' },
+            { label: 'View Analytics', icon: Activity, href: '/app/analytics', color: 'from-green-500 to-emerald-500' },
+          ].map((action, index) => (
+            <a
+              key={index}
+              href={action.href}
+              className="flex flex-col items-center gap-3 p-4 rounded-xl bg-muted/30 border border-border/50 hover:border-primary/50 hover:bg-muted/50 transition-all duration-300 group cursor-pointer"
+            >
+              <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${action.color} flex items-center justify-center group-hover:scale-110 transition-transform`}>
+                <action.icon className="w-6 h-6 text-white" />
               </div>
-              <span className="text-xs text-muted-foreground">Day {index + 1}</span>
-            </div>
+              <span className="text-sm font-medium">{action.label}</span>
+            </a>
           ))}
-        </div>
-        <div className="mt-6 flex items-center justify-center gap-6 text-sm">
-          <div className="flex items-center gap-2">
-            <div className="w-3 h-3 rounded-full bg-gradient-to-r from-primary to-secondary" />
-            <span>AI Score</span>
-          </div>
         </div>
       </Card>
     </div>

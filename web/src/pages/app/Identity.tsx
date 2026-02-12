@@ -140,7 +140,7 @@ export default function Identity() {
                 )}
               </div>
 
-              {/* Other checks (mocked for now) */}
+              {/* Age Verification */}
               <div className="flex items-center justify-between p-4 rounded-lg bg-muted/50 border border-border/50 opacity-50">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-full bg-muted flex items-center justify-center">

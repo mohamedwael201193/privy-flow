@@ -70,9 +70,11 @@ export default function DashboardLayout() {
         <div className="flex flex-col h-full">
           {/* Logo */}
           <div className="h-16 flex items-center justify-between px-6 border-b border-border/50">
-            <Link to="/app" className="flex items-center gap-2">
-              <img src="/logo.png" alt="PrivyFlow" className="w-8 h-8 rounded-lg" />
-              <span className="font-display text-xl font-bold">PrivyFlow</span>
+            <Link to="/app" className="flex items-center gap-2 group">
+              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
+                <Wallet className="w-4 h-4 text-white" />
+              </div>
+              <span className="font-display text-xl font-bold gradient-text">PrivyFlow</span>
             </Link>
             <button
               onClick={() => setSidebarOpen(false)}
@@ -83,7 +85,7 @@ export default function DashboardLayout() {
           </div>
 
           {/* Navigation */}
-          <nav className="flex-1 px-4 py-6 space-y-1 overflow-y-auto">
+          <nav className="flex-1 px-4 py-6 space-y-1.5 overflow-y-auto">
             {navigation.map((item) => {
               const isActive = location.pathname === item.href;
               return (
@@ -91,9 +93,9 @@ export default function DashboardLayout() {
                   key={item.name}
                   to={item.href}
                   className={cn(
-                    'flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors',
+                    'flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200',
                     isActive
-                      ? 'bg-primary/10 text-primary'
+                      ? 'bg-primary/15 text-primary shadow-sm border border-primary/20'
                       : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
                   )}
                 >
@@ -110,7 +112,7 @@ export default function DashboardLayout() {
           </nav>
 
           {/* Secondary navigation */}
-          <div className="px-4 py-4 border-t border-border/50 space-y-1">
+          <div className="px-4 py-4 border-t border-border/50 space-y-1.5">
             {secondaryNav.map((item) => {
               const isActive = location.pathname === item.href;
               return (
@@ -118,9 +120,9 @@ export default function DashboardLayout() {
                   key={item.name}
                   to={item.href}
                   className={cn(
-                    'flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors',
+                    'flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200',
                     isActive
-                      ? 'bg-primary/10 text-primary'
+                      ? 'bg-primary/15 text-primary shadow-sm border border-primary/20'
                       : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
                   )}
                 >
@@ -136,7 +138,7 @@ export default function DashboardLayout() {
       {/* Main content */}
       <div className="flex-1 lg:ml-64">
         {/* Top bar */}
-        <header className="sticky top-0 z-30 h-16 glass-card border-b border-border/50">
+        <header className="sticky top-0 z-30 h-16 glass-card border-b border-border/50 backdrop-blur-xl">
           <div className="h-full px-4 flex items-center justify-between">
             <button
               onClick={() => setSidebarOpen(true)}
@@ -152,9 +154,10 @@ export default function DashboardLayout() {
               </div>
 
               {isConnected ? (
-                <Button size="sm" variant="outline" onClick={() => disconnect()} className="gap-2">
+                <Button size="sm" variant="outline" onClick={() => disconnect()} className="gap-2 border-primary/30 hover:border-primary/50">
                   <Wallet className="w-4 h-4" />
-                  {address?.slice(0, 6)}...{address?.slice(-4)}
+                  <span className="hidden sm:inline">{address?.slice(0, 6)}...{address?.slice(-4)}</span>
+                  <span className="sm:hidden">{address?.slice(0, 4)}..{address?.slice(-3)}</span>
                 </Button>
               ) : (
                 <Button size="sm" onClick={handleConnect} className="gap-2">

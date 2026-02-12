@@ -72,12 +72,7 @@ export default function Corridors() {
             setCorridors(response.data.corridors || []);
         } catch (error) {
             console.error('Failed to fetch corridors:', error);
-            // Fallback data
-            setCorridors([
-                { id: 'latam-mexico', name: 'Mexico', country: 'Mexico', currency: 'MXN', flag: '🇲🇽', description: 'Send to Mexico', avgFee: '0.3%', avgTime: '< 5s', monthlyVolume: '$3.1M', currentRate: 17.25, rateDisplay: '1 USD = 17.25 MXN' },
-                { id: 'latam-brazil', name: 'Brazil', country: 'Brazil', currency: 'BRL', flag: '🇧🇷', description: 'Send to Brazil', avgFee: '0.3%', avgTime: '< 5s', monthlyVolume: '$2.4M', currentRate: 5.05, rateDisplay: '1 USD = 5.05 BRL' },
-                { id: 'latam-argentina', name: 'Argentina', country: 'Argentina', currency: 'ARS', flag: '🇦🇷', description: 'Send to Argentina (blue rate)', avgFee: '0.5%', avgTime: '< 10s', monthlyVolume: '$890K', currentRate: 1420, rateDisplay: '1 USD = 1420 ARS' },
-            ]);
+            setCorridors([]);
         } finally {
             setLoading(false);
         }
@@ -112,7 +107,7 @@ export default function Corridors() {
     const selectedCorridorData = corridors.find(c => c.id === selectedCorridor);
 
     return (
-        <div className="min-h-screen bg-gray-900 p-6">
+        <div className="min-h-screen p-6">
             <div className="max-w-6xl mx-auto">
                 {/* Header */}
                 <motion.div
@@ -120,12 +115,12 @@ export default function Corridors() {
                     animate={{ opacity: 1, y: 0 }}
                     className="mb-8"
                 >
-                    <h1 className="text-3xl font-bold text-white flex items-center gap-3">
+                    <h1 className="text-3xl font-bold flex items-center gap-3">
                         <Globe className="w-8 h-8 text-purple-500" />
                         LATAM Remittance Corridors
                     </h1>
-                    <p className="text-gray-400 mt-2">
-                        Send USDC to Latin America with real-time FX rates • 72% cheaper than Western Union
+                    <p className="text-muted-foreground mt-2">
+                        Send USDC to Latin America with real-time FX rates
                     </p>
                 </motion.div>
 
@@ -143,12 +138,12 @@ export default function Corridors() {
                             { label: 'Top Corridor', value: stats.topCorridor, icon: MapPin },
                             { label: 'Avg Savings', value: stats.avgSavingsVsBanks, icon: Percent }
                         ].map((stat, i) => (
-                            <div key={i} className="bg-gray-800/50 rounded-xl p-4 border border-gray-700">
-                                <div className="flex items-center gap-2 text-gray-400 text-sm mb-1">
+                            <div key={i} className="glass-card rounded-xl p-4">
+                                <div className="flex items-center gap-2 text-muted-foreground text-sm mb-1">
                                     <stat.icon className="w-4 h-4" />
                                     {stat.label}
                                 </div>
-                                <p className="text-xl font-bold text-white">{stat.value}</p>
+                                <p className="text-xl font-bold">{stat.value}</p>
                             </div>
                         ))}
                     </motion.div>
@@ -157,11 +152,17 @@ export default function Corridors() {
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                     {/* Corridor Selection */}
                     <div className="lg:col-span-1 space-y-4">
-                        <h2 className="text-lg font-semibold text-white mb-4">Select Corridor</h2>
+                        <h2 className="text-lg font-semibold mb-4">Select Corridor</h2>
 
                         {loading ? (
                             <div className="flex justify-center py-8">
-                                <Loader2 className="w-8 h-8 text-purple-500 animate-spin" />
+                                <Loader2 className="w-8 h-8 text-primary animate-spin" />
+                            </div>
+                        ) : corridors.length === 0 ? (
+                            <div className="text-center py-8 text-muted-foreground">
+                                <Globe className="w-12 h-12 mx-auto mb-3 opacity-30" />
+                                <p>No corridors available.</p>
+                                <p className="text-sm mt-1">Check back later or try refreshing.</p>
                             </div>
                         ) : (
                             corridors.map((corridor, i) => (
@@ -172,19 +173,19 @@ export default function Corridors() {
                                     transition={{ delay: i * 0.1 }}
                                     onClick={() => setSelectedCorridor(corridor.id)}
                                     className={`w-full text-left p-4 rounded-xl border transition ${selectedCorridor === corridor.id
-                                            ? 'bg-purple-600/20 border-purple-500'
-                                            : 'bg-gray-800/50 border-gray-700 hover:border-gray-600'
+                                            ? 'bg-primary/20 border-primary'
+                                            : 'glass-card hover:border-primary/30'
                                         }`}
                                 >
                                     <div className="flex items-center gap-3">
                                         <span className="text-3xl">{corridor.flag}</span>
                                         <div className="flex-1">
-                                            <p className="font-semibold text-white">{corridor.name}</p>
-                                            <p className="text-sm text-gray-400">{corridor.rateDisplay}</p>
+                                            <p className="font-semibold">{corridor.name}</p>
+                                            <p className="text-sm text-muted-foreground">{corridor.rateDisplay}</p>
                                         </div>
                                         <div className="text-right">
                                             <p className="text-green-400 font-medium">{corridor.avgFee}</p>
-                                            <p className="text-gray-500 text-xs">{corridor.avgTime}</p>
+                                            <p className="text-muted-foreground text-xs">{corridor.avgTime}</p>
                                         </div>
                                     </div>
                                 </motion.button>
@@ -197,28 +198,28 @@ export default function Corridors() {
                         <motion.div
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
-                            className="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-6 border border-gray-700"
+                            className="glass-card backdrop-blur-sm rounded-2xl p-6"
                         >
-                            <h2 className="text-lg font-semibold text-white mb-6 flex items-center gap-2">
-                                <DollarSign className="w-5 h-5 text-purple-500" />
+                            <h2 className="text-lg font-semibold mb-6 flex items-center gap-2">
+                                <DollarSign className="w-5 h-5 text-primary" />
                                 Calculate Transfer
                             </h2>
 
                             {/* Amount Input */}
                             <div className="mb-6">
-                                <label className="block text-gray-400 text-sm mb-2">You Send (USD)</label>
+                                <label className="block text-muted-foreground text-sm mb-2">You Send (USD)</label>
                                 <div className="relative">
-                                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-xl">$</span>
+                                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground text-xl">$</span>
                                     <input
                                         type="number"
                                         value={amount}
                                         onChange={e => setAmount(e.target.value)}
-                                        className="w-full bg-gray-900 border border-gray-700 rounded-xl pl-10 pr-4 py-4 text-2xl font-bold text-white focus:border-purple-500 outline-none"
+                                        className="w-full bg-background border border-border rounded-xl pl-10 pr-4 py-4 text-2xl font-bold focus:border-primary outline-none transition-colors"
                                         placeholder="100"
                                     />
                                     <button
                                         onClick={fetchQuote}
-                                        className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white"
+                                        className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
                                     >
                                         <RefreshCw className={`w-5 h-5 ${quoteLoading ? 'animate-spin' : ''}`} />
                                     </button>
@@ -233,50 +234,50 @@ export default function Corridors() {
                                     className="space-y-4"
                                 >
                                     {/* They Receive */}
-                                    <div className="bg-gradient-to-r from-purple-600/20 to-pink-600/20 rounded-xl p-6 border border-purple-500/30">
-                                        <p className="text-gray-400 text-sm mb-2">They Receive</p>
+                                    <div className="bg-gradient-to-r from-primary/20 to-secondary/20 rounded-xl p-6 border border-primary/30">
+                                        <p className="text-muted-foreground text-sm mb-2">They Receive</p>
                                         <div className="flex items-center gap-4">
                                             <span className="text-4xl">{selectedCorridorData.flag}</span>
                                             <div>
-                                                <p className="text-3xl font-bold text-white">
+                                                <p className="text-3xl font-bold">
                                                     {parseFloat(quote.localAmount).toLocaleString()} {quote.localCurrency}
                                                 </p>
-                                                <p className="text-gray-400 text-sm">@ {quote.rate} rate</p>
+                                                <p className="text-muted-foreground text-sm">@ {quote.rate} rate</p>
                                             </div>
                                         </div>
                                     </div>
 
                                     {/* Fee Breakdown */}
                                     <div className="grid grid-cols-3 gap-4">
-                                        <div className="bg-gray-900/50 rounded-xl p-4">
-                                            <p className="text-gray-400 text-sm">Total Fee</p>
+                                        <div className="bg-muted/30 rounded-xl p-4">
+                                            <p className="text-muted-foreground text-sm">Total Fee</p>
                                             <p className="text-xl font-bold text-green-400">${quote.fees.total}</p>
-                                            <p className="text-gray-500 text-xs">{quote.fees.percentage}</p>
+                                            <p className="text-muted-foreground text-xs">{quote.fees.percentage}</p>
                                         </div>
-                                        <div className="bg-gray-900/50 rounded-xl p-4">
-                                            <p className="text-gray-400 text-sm">Exchange Rate</p>
-                                            <p className="text-xl font-bold text-white">{parseFloat(quote.rate).toFixed(2)}</p>
-                                            <p className="text-gray-500 text-xs">{quote.localCurrency}/USD</p>
+                                        <div className="bg-muted/30 rounded-xl p-4">
+                                            <p className="text-muted-foreground text-sm">Exchange Rate</p>
+                                            <p className="text-xl font-bold">{parseFloat(quote.rate).toFixed(2)}</p>
+                                            <p className="text-muted-foreground text-xs">{quote.localCurrency}/USD</p>
                                         </div>
-                                        <div className="bg-gray-900/50 rounded-xl p-4">
-                                            <p className="text-gray-400 text-sm">Delivery</p>
-                                            <p className="text-xl font-bold text-purple-400">~5 sec</p>
-                                            <p className="text-gray-500 text-xs">Instant</p>
+                                        <div className="bg-muted/30 rounded-xl p-4">
+                                            <p className="text-muted-foreground text-sm">Delivery</p>
+                                            <p className="text-xl font-bold text-primary">~5 sec</p>
+                                            <p className="text-muted-foreground text-xs">Instant</p>
                                         </div>
                                     </div>
 
                                     {/* Comparison */}
-                                    <div className="bg-gray-900/50 rounded-xl p-4">
-                                        <p className="text-gray-400 text-sm mb-3">vs Traditional Remittance</p>
+                                    <div className="bg-muted/30 rounded-xl p-4">
+                                        <p className="text-muted-foreground text-sm mb-3">vs Traditional Remittance</p>
                                         <div className="grid grid-cols-2 gap-4">
                                             <div className="flex items-center justify-between">
-                                                <span className="text-gray-400">Western Union</span>
+                                                <span className="text-muted-foreground">Western Union</span>
                                                 <span className="text-green-400 font-semibold">
                                                     Save ${quote.comparison.westernUnion.savings}
                                                 </span>
                                             </div>
                                             <div className="flex items-center justify-between">
-                                                <span className="text-gray-400">Wise</span>
+                                                <span className="text-muted-foreground">Wise</span>
                                                 <span className="text-green-400 font-semibold">
                                                     Save ${quote.comparison.wise.savings}
                                                 </span>
@@ -288,7 +289,7 @@ export default function Corridors() {
                                     <motion.button
                                         whileHover={{ scale: 1.02 }}
                                         whileTap={{ scale: 0.98 }}
-                                        className="w-full py-4 bg-gradient-to-r from-purple-600 to-pink-600 rounded-xl text-white font-semibold text-lg flex items-center justify-center gap-2"
+                                        className="w-full py-4 bg-gradient-to-r from-primary to-secondary rounded-xl text-white font-semibold text-lg flex items-center justify-center gap-2 hover:opacity-90 transition-opacity"
                                         onClick={() => window.location.href = `/app/send?corridor=${selectedCorridor}&amount=${amount}`}
                                     >
                                         Send to {selectedCorridorData.country}
@@ -299,7 +300,7 @@ export default function Corridors() {
 
                             {quoteLoading && (
                                 <div className="flex justify-center py-8">
-                                    <Loader2 className="w-8 h-8 text-purple-500 animate-spin" />
+                                    <Loader2 className="w-8 h-8 text-primary animate-spin" />
                                 </div>
                             )}
                         </motion.div>
@@ -309,20 +310,20 @@ export default function Corridors() {
                             <motion.div
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
-                                className="mt-6 bg-gray-800/30 rounded-xl p-4 border border-gray-700"
+                                className="mt-6 glass-card rounded-xl p-4"
                             >
                                 <div className="flex items-start gap-3">
                                     <span className="text-2xl">{selectedCorridorData.flag}</span>
                                     <div>
-                                        <h3 className="font-semibold text-white">{selectedCorridorData.name} Corridor</h3>
-                                        <p className="text-gray-400 text-sm mt-1">{selectedCorridorData.description}</p>
+                                        <h3 className="font-semibold">{selectedCorridorData.name} Corridor</h3>
+                                        <p className="text-muted-foreground text-sm mt-1">{selectedCorridorData.description}</p>
                                         {selectedCorridorData.note && (
-                                            <p className="text-purple-400 text-sm mt-2 flex items-center gap-1">
+                                            <p className="text-primary text-sm mt-2 flex items-center gap-1">
                                                 <Zap className="w-4 h-4" />
                                                 {selectedCorridorData.note}
                                             </p>
                                         )}
-                                        <p className="text-gray-500 text-xs mt-2">
+                                        <p className="text-muted-foreground text-xs mt-2">
                                             Monthly Volume: {selectedCorridorData.monthlyVolume}
                                         </p>
                                     </div>
